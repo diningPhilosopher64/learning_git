@@ -1,0 +1,241 @@
+export PS1='\W$(__git_ps1 "(%s)") > '
+
+
+This document has two parts 
+
+
+1) Commands and 2) Notes.
+
+I think it is better to add all the git log's into a file and when required it will help revert back.
+
+Commands :
+
+git init;   -> initialize a project in the directory.
+
+
+git add . ;  -> add all changes that were made in the particular directory.
+
+git add <File name > ; -> adds a particular file to the staging index.
+
+git commit -m ""  -> commits all the changes to git for it to store. -m stands for commit message.
+		  -> Write commit message in the present tense instead of past tense.
+		  -> develop short hand notations like "[css,js]" meaning that changes have been made to css and javascript.
+		  -> "bugfix:" means made changes that fixed a bug.
+		  ->"#38076" meaning that issue 38076 is resolved with your changes.
+		  -> you can hit return key and keep typing the commit message , limit the number of characters to 72 a line.
+		  ->A good commit message states the a short commit message followed by a paragraph of describing the bug and the solution.
+		   -> Only commits files that are on the staging index . If files are still untracked then they will not be added and they 
+		   -> will be shown in red color when git status command is entered. 
+
+git log ;  -> displays the log of all the commits .
+
+
+git help <type something here>  ;   -> the git help command gives the man page of git . Any other command's description typed after git help 					    ->	will display the man page of that command.
+				    -> Example : git help log ; -> returns the man page for git log command.
+
+
+git log -n <Number> ;  -> This limits the number of log messages that will be displayed and will display the most recent ones.
+		       -> Example : git log -n 3;  -> will return latest three commit messages.
+
+git log --since=2015-11-20 ;  -> will return all the commits since that date. 
+
+
+git log --until=2015-11-20 ;  -> will return all the commits up untill that date.
+
+
+git log --author="Sourabh" ;  -> will return all the commits by that author.
+
+	
+git log --grep="Init" ;  -> this command will search for all commit messages which has Init in it.
+			 -> grep stands for global regular expression search.
+
+git log HEAD ;  	 -> Displays the latest commit of a particular branch of a repo.
+				
+git status ; 		 -> Returns the difference between the working directory, staging index and the repo.
+
+git diff <filename> ;    -> shows the difference between the file in the working directory and the one which was commited earlier.
+
+git diff --staged <filename> ; -> shows the difference between the file in the working directory and the staging area.
+
+git rm <filename> ;    -> <refer notes  - 79 >deletes the file from the repository .
+
+git mv <oldfilename> <newfilename> ;  -> <refer notes 90 > renames the file with the given name.
+
+git mv <filename> <directory>/<filename> ; -> moves the file to the given directory.
+
+
+git commit -am "" ;    -> <refer notes - 104 > commits the files directly from modified to repo.
+
+git checkout -- <filename> ;   ->  will restore the previous version of a file. 	
+
+git reset HEAD <filename> ;  -> HEAD can be anything else it is the current branch . 
+
+git commit --amend -m "" ;  -> if you commited a file and made a small change instead of recommiting it  , we can amend it to the previous
+				commit . In the commit message use the same name as used in the one before.
+				It can also be used to change commit messages.
+
+git commit --amend --allow-empty -m "" ; -> will allow even if there are no changes.
+
+git checkout <commit-id> -- <filename> ;  -> A part of the commit id will be enough to restore a particular version of a file .By doing 
+					     this the file will be moved to the staging area. Now you can use git diff --staged <filename>
+						to check the difference between the working directory and the one in staging area.
+
+cat .git/refs/heads/master  -> gives the actual commit id where the HEAD pointer is pointing to.
+
+git revert <commit-id> ; this will revert the file to the particular version you want.
+	 
+git reset --soft  <commit id>    -> <refer notes 130 >does not change staging index  or working directory.
+
+git reset --mixed   ->   changes staging index to match repository , does not change working directory.
+
+git reset --hard    -> changes staging index and working directory to match the repository.
+
+cat .git/HEAD	 -> displays where the HEAD pointer is pointing to.
+
+
+git clean -n ;  -> to remove untracked files . -n is used to show what files will e removed 
+
+git clean -f ; -> removes untracked files.
+
+git rm --cached <filename> ;  -> Untracks a particular file .Git says that it deleted it when git status is typed but it is not deleted.
+
+
+git ls-tree HEAD -> gives the tree structure of our project.
+
+git ls-tree HEAD <directory name>  -> Lists out the files in that directory.
+
+
+git log --oneline   -> gives all the commits in one line each.
+
+
+git log --oneline -3  -> gives latest 3 commits in one line each.
+
+
+git log --since="2 weeks ago"  --until="3 days ago"    -> from 2 weeks ago to 3 days ago from present day.
+
+git log --since=2.weeks --until=3.days     -> same as above query.
+
+
+git log --author="Kevin"   -> commits by author  name.
+
+git log --grep="temp"    -> displays commits where commit message has the following word.
+
+
+git log  <commitid>..<commitid> --oneline = displays range of git log from specified commit id's in one line each.
+					    if second commit id is not mentioned then it will take till the latest commit.
+			
+
+git log <commitid>.. index.html   -> specifies all the changes to the file index.html since the commit mentioned.
+
+
+git log -p <commitid>.. index.html  -> shows all the commits and changes to the file made since that commit.
+
+git log  --format=short <or> oneline <or> medium <or> full <or> fuller <or> raw
+
+git log --graph   -> shows a graph of all the commits and branches if any . the more useful command for graph is 
+
+git log --oneline --graph --all --decorate   -> shows graph of all commits branches and in oneline.
+
+
+git show <commitid>   -> it shows the complete commit details and also executes git diff command and displays it below the commit message.
+
+git diff <commitid>   -> displays the difference in project between that commit id and where the HEAD pointer is pointing to.
+
+git diff <commitid> <filename> -> displays the differences in the file from that commit id and the HEAD pointer is pointing to.
+
+git diff <commitid>..<commitid>  -> displays difference in project between those two commit id's.
+
+
+git diff -b <commitid> HEAD    -> displays differences between commitid and HEAD and ignores single space character changes.
+
+git diff -w <commitid> HEAD    -> displays differences between commitidand HEAD and ignores all single space character changes.
+
+git branch   -> displays all the branches . the one with * before it is the current branch we are working on.
+
+git branch <branch_name>   -> creates new branch with the given name.
+
+git checkout <branch_name>   -> switch branch to given branch name.
+
+git checkout -b <branch_name>   -> create new branch and switch to it in one step. 
+
+
+git diff --color-words <filename>  -> shows differences in just 1 line.
+
+git diff --color-words <branchname>..<branchname>^  -> show differences between two branch heads in single line and the second branches
+						       last second commit.
+
+
+git branch -m <brancholdname> <branchnewname>   -> changes branch name.
+
+git remote   -> displays all the available remotes.
+
+git remote add <alias> <github link of the project repo>   -> adds remote repo with the given alias name.
+
+git remote rm <alias>   -> removes remote repo.
+
+
+git merge <branch_name>   -> merges the specified branch name to the master branch
+
+git branch --merged   -> shows all the merged branches with the master.
+
+git branch -r   -> shows remote branches
+
+git branch -a   -> shows both remote and local branches.
+
+
+Notes:
+If auto-complete is checked on git commands and even file names can be auto-completed using tab key.
+
+Git has a three- tree architecture .
+
+Repository ---  staging index  --- working.
+
+
+git add command adds the file from working directory to the staging index.  
+
+git commit command commits the file from the staging index to the repository.
+
+HEAD pointer points to the tip of the current working branch of the repository.
+
+
+After modifying a file we have to use git add  ; command again to move that file to a staging index even though it was commited before . As 
+ changes were made the file will have to be moved to the staging index and then commited .
+
+
+there are 2 ways to remove files using git. First way is to delete the file manually and using the command git rm <filename>;
+
+The second way is to remove the file directly from the commandline using the same command git rm <filename>; .
+
+The difference between the first and the second way is in the second way it will be permanently deleted i.e. cannot be found in trash/
+recycle bin whereas in the first way the file 
+will be in the trash/recycle bin.
+
+
+Git treats move and rename as a single command i.e. same command for both name and replace. 
+so to rename the file git mv second.txt secondary.txt ; will essentially rename the file from second to secondary.
+So now to move the file into a different directory in the repo 
+git mv secondory.txt first_folder/secondary.txt ; 
+
+When you type git status even moving the file into a different directory inside the repo is also displayed as rename. 
+
+
+by using git commit -am "" it adds all the files to the repo and you wont have the option of not including certain files.Another caveat 
+when using this command is that it doesnt work well when adding or deleting files. 
+
+
+copy the latest commit logs after typing git log into a seperate text file as they wont show up after using reset.
+
+If you have any untracked files which you want to keep it and dont want to be constantly shown by the git status command then we need to 
+add a .gitignore folder in the root of our project. 
+
+
+Blob stands for a file in the directory and a tree stands for a directory.
+
+
+
+
+
+
+
+		
+
